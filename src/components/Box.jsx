@@ -105,31 +105,37 @@ const Box = () => {
       {!imageSrc &&    <input type="file" accept="image/*" onChange={handleImageUpload} />}
    
       {imageSrc && (
-        <div className="box" style={{ position: "relative" }}>
-          <img
+        <div className="box2" style={{ position: "relative" }}>
+          <div style={{
+            width:"610px",
+            height:"310px",
+            background: `url(${imageSrc})`,
+            backgroundSize:"cover"
+          }}>     <div
+          className="resizable"
+          style={{
+            width: `${width}px`,
+            height: `${height}px`,
+            position: "absolute",
+            left: `${left}px`,
+            top: `${top}px`,
+            cursor: dragging ? "grabbing" : "grab",
+          }}
+          onMouseDown={handleMouseDown}
+        >
+          <div className="resizers">
+            <div className="resizer top-left"></div>
+            <div className="resizer top-right"></div>
+            <div className="resizer bottom-left"></div>
+            <div className="resizer bottom-right"></div>
+          </div>
+        </div></div>
+          {/* <img
             src={imageSrc} // Assuming imageSrc is defined somewhere in your component
             alt="Selected"
             style={{ maxWidth: "100%", maxHeight: "600px" }}
-          />{" "}
-          <div
-            className="resizable"
-            style={{
-              width: `${width}px`,
-              height: `${height}px`,
-              position: "absolute",
-              left: `${left}px`,
-              top: `${top}px`,
-              cursor: dragging ? "grabbing" : "grab",
-            }}
-            onMouseDown={handleMouseDown}
-          >
-            <div className="resizers">
-              <div className="resizer top-left"></div>
-              <div className="resizer top-right"></div>
-              <div className="resizer bottom-left"></div>
-              <div className="resizer bottom-right"></div>
-            </div>
-          </div>
+          /> */}
+     
         </div>
       )}
     </div>
