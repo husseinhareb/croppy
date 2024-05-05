@@ -5,8 +5,8 @@ import SideBar from "./components/SideBar";
 function App() {
   return (
     <div className="container">
-      <SideBar />
       <Box />
+      <SideBar />
     </div>
   );
 }
