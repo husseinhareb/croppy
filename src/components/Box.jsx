@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Box.css";
-import { useCropDim } from "../store";
+import { useCropDim, useSetCropDim } from "../store";
 
 const Box = () => {
-    const cropDim = useCropDim(); // Accessing crop dimensions from Zustand store
+
     const [width, setWidth] = useState(100);
     const [height, setHeight] = useState(100);
     const [left, setLeft] = useState(100);
@@ -13,6 +13,9 @@ const Box = () => {
     const [originalY, setOriginalY] = useState(0);
     const [resizingCorner, setResizingCorner] = useState(null);
     const [imageSrc, setImageSrc] = useState(null);
+
+    const cropDim = useCropDim(); 
+    const setCropDim = useSetCropDim(); 
 
     const minimumSize = 20;
 
@@ -43,54 +46,78 @@ const Box = () => {
         setLeft(cropDim.x1);
         setTop(cropDim.y1);
     }, [cropDim]);
+    
+
 
     const handleMouseMove = (e) => {
         if (dragging) {
-            if (!resizingCorner) {
-                const newLeft = left + (e.pageX - originalX);
-                const newTop = top + (e.pageY - originalY);
-                setLeft(newLeft);
-                setTop(newTop);
-                setOriginalX(e.pageX);
-                setOriginalY(e.pageY);
+          if (!resizingCorner) {
+            const newLeft = Math.max(left + (e.pageX - originalX),0);  
+            const newTop = Math.max(top + (e.pageY - originalY),0);
+            setLeft(newLeft);
+            setTop(newTop);
+            setOriginalX(e.pageX);
+            setOriginalY(e.pageY);
+      
+            // Update crop dimensions in the store
+            const newCropDim = {
+              ...cropDim,
+              x1: newLeft,
+              y1: newTop,
+              x2: newLeft + width,
+              y2: newTop + height,
+            };
+            setCropDim(newCropDim);
+          } else {
+            const deltaX = e.pageX - originalX;
+            const deltaY = e.pageY - originalY;
+      
+            let newWidth = width;
+            let newHeight = height;
+            let newLeft = left;
+            let newTop = top;
+      
+            if (resizingCorner.includes("right")) {
+              newWidth += deltaX;
             } else {
-                const deltaX = e.pageX - originalX;
-                const deltaY = e.pageY - originalY;
-
-                let newWidth = width;
-                let newHeight = height;
-                let newLeft = left;
-                let newTop = top;
-
-                if (resizingCorner.includes("right")) {
-                    newWidth += deltaX;
-                } else {
-                    newWidth -= deltaX;
-                    newLeft += deltaX;
-                }
-
-                if (resizingCorner.includes("bottom")) {
-                    newHeight += deltaY;
-                } else {
-                    newHeight -= deltaY;
-                    newTop += deltaY;
-                }
-
-                if (newWidth > minimumSize) {
-                    setWidth(newWidth);
-                }
-
-                if (newHeight > minimumSize) {
-                    setHeight(newHeight);
-                }
-
-                setLeft(newLeft);
-                setTop(newTop);
-                setOriginalX(e.pageX);
-                setOriginalY(e.pageY);
+              newWidth -= deltaX;
+              newLeft += deltaX;
             }
+      
+            if (resizingCorner.includes("bottom")) {
+              newHeight += deltaY;
+            } else {
+              newHeight -= deltaY;
+              newTop += deltaY;
+            }
+      
+            // Ensure dimensions are not negative
+            newWidth = Math.max(newWidth, minimumSize);
+            newHeight = Math.max(newHeight, minimumSize);
+            newLeft = Math.max(newLeft, 0);
+            newTop = Math.max(newTop, 0);
+      
+            setWidth(newWidth);
+            setHeight(newHeight);
+            setLeft(newLeft);
+            setTop(newTop);
+            setOriginalX(e.pageX);
+            setOriginalY(e.pageY);
+      
+            // Update crop dimensions in the store
+            const newCropDim = {
+              ...cropDim,
+              x1: newLeft,
+              y1: newTop,
+              x2: newLeft + newWidth,
+              y2: newTop + newHeight,
+            };
+            setCropDim(newCropDim);
+          }
         }
-    };
+      };
+      
+    
 
     const handleMouseUp = () => {
         setDragging(false);
