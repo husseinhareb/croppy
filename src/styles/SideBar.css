@@ -48,7 +48,8 @@
 
 .crop-dim-container input {
   color: blueviolet;
-  width: 55px;
+  width: 30%;
+  min-width: 55px;
   margin: 13px;
   text-align: center;
   border: none;
