@@ -10,6 +10,7 @@ const Box = () => {
     const [originalX, setOriginalX] = useState(0);
     const [originalY, setOriginalY] = useState(0);
     const [resizingCorner, setResizingCorner] = useState(null);
+    const [imageSrc, setImageSrc] = useState(null);
 
     const minimumSize = 20;
 
@@ -87,20 +88,40 @@ const Box = () => {
         setResizingCorner(null);
     };
 
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                setImageSrc(event.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     return (
         <div className='box'>
-            <div
-                className="resizable"
-                style={{ width: `${width}px`, height: `${height}px`, position: 'absolute', left: `${left}px`, top: `${top}px`, cursor: dragging ? 'grabbing' : 'grab' }}
-                onMouseDown={handleMouseDown}
-            >
-                <div className="resizers">
-                    <div className="resizer top-left"></div>
-                    <div className="resizer top-right"></div>
-                    <div className="resizer bottom-left"></div>
-                    <div className="resizer bottom-right"></div>
+            <input type="file" accept="image/*" onChange={handleImageUpload} />
+            {imageSrc && (
+                <div className='box' style={{ position: 'relative' }}>
+      <img
+        src={imageSrc} // Assuming imageSrc is defined somewhere in your component
+        alt='Selected'
+        style={{ maxWidth: '100%', maxHeight: '600px' }}
+      />                    <div
+                        className="resizable"
+                        style={{ width: `${width}px`, height: `${height}px`, position: 'absolute', left: `${left}px`, top: `${top}px`, cursor: dragging ? 'grabbing' : 'grab' }}
+                        onMouseDown={handleMouseDown}
+                    >
+                        <div className="resizers">
+                            <div className="resizer top-left"></div>
+                            <div className="resizer top-right"></div>
+                            <div className="resizer bottom-left"></div>
+                            <div className="resizer bottom-right"></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };
