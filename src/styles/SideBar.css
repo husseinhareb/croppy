@@ -1,8 +1,107 @@
 .side-bar {
+  position: relative;
+  width: 25vw;
+  padding: 13px;
   height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  flex: 1;
+  background-color: #e9e9e9;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.side-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 13px;
+  height: 100%;
+  background-color: rgba(137, 43, 226, 0.341);
+  z-index: 10;
+  border-radius: 13px;
+  animation: side-anim 5s infinite;
+}
+
+.side-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 13px;
+  height: 100%;
+  background-color: rgba(137, 43, 226, 0.264);
+  z-index: 10;
+  border-radius: 13px;
+  animation: side-anim 8s infinite;
+}
+
+.crop-dim-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex:1;
-  background-color: violet;
+  flex-flow: row wrap;
+}
+
+.crop-dim-container input {
+  color: blueviolet;
+  width: 55px;
+  margin: 13px;
+  text-align: center;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  padding: 13px;
+  border-radius: 13px;
+  box-shadow: inset 3px 3px 8px #dbdbdb, inset -3px -3px 8px #f7f7f7,
+    -1px -1px 1px #c6c6c6, 1px 1px 1px #ffffff;
+  transition: transform 0.3s;
+}
+
+.crop-dim-container input:hover {
+  transform: scale(1.05);
+}
+
+.save-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.save-btn {
+  letter-spacing: 1px;
+  font-weight: 700;
+  color: blueviolet;
+  font-size: 1em;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  padding: 13px 21px;
+  border-radius: 13px;
+  background: #e9e9e9;
+  box-shadow: 3px 3px 3px #c6c6c6, -3px -3px 3px #ffffff,
+    inset -1px -1px 1px #c6c6c6, inset 1px 1px 1px #ffffff;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.save-btn:hover {
+  transform: scale(1.05);
+}
+
+@keyframes side-anim {
+  0% {
+    filter: blur(3px) brightness(1);
+  }
+
+  50% {
+    filter: blur(8px) brightness(2);
+  }
+
+  100% {
+    filter: blur(3px) brightness(1);
+  }
 }
