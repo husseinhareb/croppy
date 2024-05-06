@@ -109,6 +109,7 @@
   border-radius: 13px;
   margin: 5px;
   z-index: 1000;
+  animation: anim-mesg 3s ;
 }
 
 @keyframes side-anim {
@@ -122,5 +123,23 @@
 
   100% {
     filter: blur(3px) brightness(1);
+  }
+}
+
+@keyframes anim-mesg {
+  0% {
+    opacity: 0;
+    filter: blur(1px);
+  }
+
+  30% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
   }
 }
