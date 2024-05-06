@@ -39,9 +39,31 @@ const SideBar = () => {
     }
   };
 
+  const cropImage = () => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const { x1, x2, y1, y2 } = cropDim;
+    
+    canvas.width = x2 - x1;
+    canvas.height = y2 - y1;
+    
+    ctx.drawImage(
+      image,
+      x1, y1, x2 - x1, y2 - y1, // source rectangle
+      0, 0, x2 - x1, y2 - y1 // destination rectangle
+    );
+  
+    const croppedImageData = canvas.toDataURL();
+  
+    const downloadLink = document.createElement("a");
+    downloadLink.href = croppedImageData;
+    downloadLink.download = "croppy-" + new Date().toISOString().slice(0, 10).replaceAll('-', '') + "_" + new Date().toLocaleTimeString('en-US', {hour12: false}).replaceAll(':', '') + ".png";
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
   return (
     <div className="side-bar">
-<div className="crop-dim-container">
+      <div className="crop-dim-container">
         {["x1", "x2", "y1", "y2"].map((key) => (
           <input
             key={key}
@@ -55,7 +77,7 @@ const SideBar = () => {
         ))}
       </div>
       <div className="save-btn-container">
-        <button className="save-btn">save</button>
+        <button className="save-btn" onClick={cropImage}>save</button>
       </div>
     </div>
   );

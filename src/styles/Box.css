@@ -22,7 +22,6 @@ box-shadow: inset 12px 12px 24px #7425c0,
             z-index: -1;
 }
 .resizable {
-  background: #8b8181aa;
   position: absolute;
 }
 
