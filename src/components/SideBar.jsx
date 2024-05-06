@@ -1,25 +1,38 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import "../styles/SideBar.css";
-import { useCropDim, useSetCropDim } from "../store";
+import { useCropDim, useImage, useSetCropDim } from "../store";
 
 const SideBar = () => {
   const cropDim = useCropDim();
   const setCropDim = useSetCropDim();
+  const image = useImage();
 
-  const validateValue = (value) => {
+  const validateValue = (value, key) => {
     const raw = Math.abs(parseInt(value));
-    return raw ? raw : 0;
+    if(raw) {
+      if(["x1","x2"].includes(key)) {
+         return raw /1
+      } else {
+
+      }
+    } else return 0
   };
 
   // Memoized event handler for scrolling on input
-  const handleScroll = useCallback((e, key) => {
-    e.preventDefault();
-    const delta = Math.sign(e.deltaY) * -10;
-    setCropDim({
-      ...cropDim,
-      [key]:parseInt(cropDim[key]) + delta>=0?parseInt(cropDim[key]) + delta:0
-    });
-  }, [cropDim, setCropDim]);
+  const handleScroll = useCallback(
+    (e, key) => {
+      e.preventDefault();
+      const delta = Math.sign(e.deltaY) * -10;
+      setCropDim({
+        ...cropDim,
+        [key]:
+          parseInt(cropDim[key]) + delta >= 0
+            ? parseInt(cropDim[key]) + delta
+            : 0,
+      });
+    },
+    [cropDim, setCropDim]
+  );
 
   // Reusable input component
   const CropInput = ({ placeholder, value, onChange, onWheel }) => (
@@ -41,7 +54,10 @@ const SideBar = () => {
             placeholder={key.toUpperCase()}
             value={cropDim[key]}
             onChange={(e) =>
-              setCropDim({ ...cropDim, [key]: validateValue(e.target.value) })
+              setCropDim({
+                ...cropDim,
+                [key]: validateValue(e.target.value, key),
+              })
             }
             onWheel={(e) => handleScroll(e, key)}
           />

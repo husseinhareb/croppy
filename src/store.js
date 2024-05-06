@@ -16,6 +16,13 @@ const useStore = create((set) => ({
       cropDim: newCropDim,
     }));
   },
+  image: "light ",
+  setImage: (newImage) => {
+    set((state) => ({
+      ...state,
+      image: newImage,
+    }));
+  },
 }));
 
 //Selectors
@@ -23,3 +30,5 @@ export const useMode = () => useStore((state) => state.mode);
 export const useSetMode = () => useStore((state) => state.setMode);
 export const useCropDim = () => useStore((state) => state.cropDim);
 export const useSetCropDim = () => useStore((state) => state.setCropDim);
+export const useImage = () => useStore((state) => state.image);
+export const useSetImage = () => useStore((state) => state.setImage);
