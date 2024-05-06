@@ -9,7 +9,7 @@
   flex-direction: column;
   flex: 1;
   background-color: #e9e9e9;
-  border-top-left-radius: 8px;
+  border-top-left-radius: 13%;
   border-bottom-left-radius: 8px;
 }
 
@@ -109,7 +109,7 @@
   border-radius: 13px;
   margin: 5px;
   z-index: 1000;
-  animation: anim-mesg 3s ;
+  animation: anim-mesg 3s;
 }
 
 @keyframes side-anim {
@@ -143,4 +143,30 @@
   to {
     opacity: 0;
   }
+}
+
+.change {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  position: absolute;
+  top: 0%;
+  left: -10%;
+  width: 12%; /* Adjust this value as needed */
+  height: 5%; /* Adjust this value as needed */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.change:hover {
+  transform: scale(1.05) rotate(5deg);
+}
+#change-icon {
+  font-size: 5vw;
+  width: 100%;
+  height: 100%;
 }

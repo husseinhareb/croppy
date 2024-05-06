@@ -46,7 +46,6 @@ const Box = () => {
   const setImage = useSetImage();
   const [sqWidth, setSqWidth] = useState(100);
   const [sqHeight, setSqHeight] = useState(100);
-  const minimumSize = 20;
 
   useEffect(() => {
     if (dragging) {
@@ -214,7 +213,6 @@ const Box = () => {
         y2: parseInt((2 * image.height) / 3),
       });
       handleResize(); // Initial resizing
-
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }
@@ -229,7 +227,7 @@ const Box = () => {
       {imageSrc && (
         <div
           ref={imgContRef}
-          className="square"
+          className={`square fadeIn`}
           style={{
             width: `${sqWidth}px`,
             height: `${sqHeight}px`,

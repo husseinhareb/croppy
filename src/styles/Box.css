@@ -15,6 +15,8 @@
   width: 97%;
   height: 97%;
   border-radius: 13px;
+  border-top-right-radius: 8%;
+  border-bottom-left-radius: 8%;
 box-shadow: inset 12px 12px 24px #7425c0,
             inset -5px -5px 5px #9e31ff,   -3px -3px 3px #7425c0, 3px 3px 3px #9e31ff;
 
@@ -63,4 +65,21 @@ box-shadow: inset 12px 12px 24px #7425c0,
   right: -5px;
   bottom: -5px;
   cursor: nwse-resize;
+}
+
+/* Define the fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Start with opacity 0 */
+  }
+  to {
+    opacity: 1; /* End with opacity 1 */
+  }
+}
+
+/* Create a class to apply the fade-in animation */
+.fadeIn {
+  animation-name: fadeIn; /* Use the defined keyframes */
+  animation-duration: 2.5s; /* Duration of the animation */
+  animation-fill-mode: forwards; /* Maintain the final state after animation */
 }

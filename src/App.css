@@ -7,3 +7,19 @@
   flex: 1;
   background-color:var(background-color);
 }
+
+@keyframes fadeOut {
+  from {
+    opacity: 1; /* Start with full opacity */
+  }
+  to {
+    opacity: 0; /* End with transparency */
+  }
+}
+
+/* Apply the fade-out animation to an element */
+.fadeOut {
+  animation-name: fadeOut; /* Use the defined keyframes */
+  animation-duration: 1s; /* Duration of the animation */
+  animation-fill-mode: forwards; /* Maintain the final state after animation */
+}

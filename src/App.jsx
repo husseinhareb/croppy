@@ -6,9 +6,9 @@ import { useImage } from "./store";
 function App() {
   const image = useImage()
   return (
-    <div className="container">
+    <div className="container" id="container">
       <Box />
-      {image.src && <SideBar />}
+      {image?.src && <SideBar />}
     </div>
   );
 }

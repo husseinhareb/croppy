@@ -1,11 +1,13 @@
 import React, { useCallback, useRef, useState } from "react";
 import "../styles/SideBar.css";
-import { useCropDim, useImage, useSetCropDim } from "../store";
+import { useCropDim, useImage, useSetCropDim, useSetImage } from "../store";
+import { FaExchangeAlt } from "react-icons/fa";
 
 const SideBar = () => {
   const cropDim = useCropDim();
   const setCropDim = useSetCropDim();
   const image = useImage();
+  const setImage = useSetImage()
   const [showMessage, setShowMessage] = useState(false);
   const validateValue = (value) => {
     const parsedValue = Math.abs(parseInt(value));
@@ -83,6 +85,7 @@ const SideBar = () => {
       <div className="crop-dim-container">
         {["x1", "x2", "y1", "y2"].map((key) => (
           <input
+          title={key.toUpperCase()}
             key={key}
             placeholder={key.toUpperCase()}
             value={cropDim[key]}
@@ -97,10 +100,21 @@ const SideBar = () => {
         <div className="message">Cropped Image Saved Successfully!</div>
       )}
       <div className="save-btn-container">
-        <button className="save-btn" onClick={cropImage}>
+        <button className="save-btn" onClick={cropImage} title="Save Cropped Image">
           save
         </button>
       </div>
+      <button className="change" title="change picture" onClick={() => {
+        document.getElementById("container").classList.add("fadeOut")
+        setTimeout(() => {
+          document.getElementById("container").classList.remove("fadeOut")
+          window.location.reload()
+        }, 1000);
+       
+        
+        }}>
+        <FaExchangeAlt color="#e9e9e9" id="change-icon"/>
+      </button>
     </div>
   );
 };
