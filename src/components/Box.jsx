@@ -1,6 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../styles/Box.css";
 import { useCropDim, useSetCropDim } from "../store";
+
+const extractNumber = (str) => {
+    const matches = str.match(/\d+/); // Match one or more digits
+    return matches ? parseInt(matches[0]) : 0; // Convert matched digits to integer
+  };
 
 const Box = () => {
 
@@ -13,7 +18,7 @@ const Box = () => {
     const [originalY, setOriginalY] = useState(0);
     const [resizingCorner, setResizingCorner] = useState(null);
     const [imageSrc, setImageSrc] = useState(null);
-
+    const imgContRef = useRef()
     const cropDim = useCropDim(); 
     const setCropDim = useSetCropDim(); 
 
@@ -51,9 +56,19 @@ const Box = () => {
 
     const handleMouseMove = (e) => {
         if (dragging) {
+            const maxwidth = extractNumber(imgContRef.current.style.width)
+            const maxheight = extractNumber(imgContRef.current.style.height)
           if (!resizingCorner) {
-            const newLeft = Math.max(left + (e.pageX - originalX),0);  
-            const newTop = Math.max(top + (e.pageY - originalY),0);
+            let newLeft = Math.min(Math.max(left + (e.pageX - originalX),0), maxwidth-width) 
+            let newTop = Math.min(Math.max(top + (e.pageY - originalY),0), maxheight-height)
+            let newWidth = width
+            let newHeight = height
+            if(newLeft + width > maxwidth) {
+                newWidth -= newLeft + width - maxwidth
+            }
+            if(newTop + height > maxheight) {
+                newHeight -= newTop + height - maxheight
+            }
             setLeft(newLeft);
             setTop(newTop);
             setOriginalX(e.pageX);
@@ -64,8 +79,8 @@ const Box = () => {
               ...cropDim,
               x1: newLeft,
               y1: newTop,
-              x2: newLeft + width,
-              y2: newTop + height,
+              x2: newLeft + newWidth,
+              y2: newTop + newHeight,
             };
             setCropDim(newCropDim);
           } else {
@@ -92,11 +107,19 @@ const Box = () => {
             }
       
             // Ensure dimensions are not negative
-            newWidth = Math.max(newWidth, minimumSize);
-            newHeight = Math.max(newHeight, minimumSize);
+            
             newLeft = Math.max(newLeft, 0);
             newTop = Math.max(newTop, 0);
-      
+            newWidth = Math.max(newWidth, minimumSize)
+            if(newWidth + newLeft > maxwidth) {
+                newWidth -= newWidth + newLeft - maxwidth  
+            }
+            newHeight = Math.max(newHeight, minimumSize)
+            if(newHeight + newTop > maxheight) {
+                newHeight -= newHeight + newTop - maxheight
+            }
+        
+            
             setWidth(newWidth);
             setHeight(newHeight);
             setLeft(newLeft);
@@ -144,6 +167,7 @@ const Box = () => {
             {imageSrc && (
                 <div className="box2" style={{ position: "relative" }}>
                     <div
+                    ref={imgContRef}
                         style={{
                             width: "610px",
                             height: "310px",

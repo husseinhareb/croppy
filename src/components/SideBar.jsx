@@ -14,10 +14,10 @@ const SideBar = () => {
   // Memoized event handler for scrolling on input
   const handleScroll = useCallback((e, key) => {
     e.preventDefault();
-    const delta = Math.sign(e.deltaY) * -1;
+    const delta = Math.sign(e.deltaY) * -10;
     setCropDim({
       ...cropDim,
-      [key]: Math.abs(parseInt(cropDim[key]) + delta),
+      [key]:parseInt(cropDim[key]) + delta>=0?parseInt(cropDim[key]) + delta:0
     });
   }, [cropDim, setCropDim]);
 
