@@ -28,10 +28,10 @@ function fitImageInsideSquare(imageWidth, imageHeight, squareSize) {
 }
 
 const Box = () => {
-  const [width, setWidth] = useState(100);
-  const [height, setHeight] = useState(100);
-  const [left, setLeft] = useState(100);
-  const [top, setTop] = useState(100);
+  const [width, setWidth] = useState();
+  const [height, setHeight] = useState();
+  const [left, setLeft] = useState();
+  const [top, setTop] = useState();
   const [dragging, setDragging] = useState(false);
   const [originalX, setOriginalX] = useState(0);
   const [originalY, setOriginalY] = useState(0);
@@ -41,8 +41,8 @@ const Box = () => {
   const boxRef = useRef();
   const cropDim = useCropDim();
   const setCropDim = useSetCropDim();
-  const image = useImage()
-  const setImage = useSetImage()
+  const image = useImage();
+  const setImage = useSetImage();
   const [sqWidth, setSqWidth] = useState(100);
   const [sqHeight, setSqHeight] = useState(100);
   const minimumSize = 20;
@@ -67,53 +67,56 @@ const Box = () => {
       setResizingCorner(e.target.classList[1]);
     }
   };
-
+  const ptpi = (p, v) => parseInt((p / 100) * v);
+  const pitp = (pi, v) => (pi / v) * 100;
   useEffect(() => {
-    setWidth(cropDim.x2 - cropDim.x1);
-    setHeight(cropDim.y2 - cropDim.y1);
-    setLeft(cropDim.x1);
-    setTop(cropDim.y1);
+    setWidth(pitp(cropDim.x2 - cropDim.x1, image.width));
+    setHeight(pitp(cropDim.y2 - cropDim.y1, image.height));
+    setLeft(pitp(cropDim.x1, image.width));
+    setTop(pitp(cropDim.y1, image.height));
   }, [cropDim]);
 
   const handleMouseMove = (e) => {
     if (dragging) {
-        // const sqWidth = extractNumber(imgContRef.current.style.width);
-        // const sqHeight = extractNumber(imgContRef.current.style.height);
- 
+      // const sqWidth = extractNumber(imgContRef.current.style.width);
+      // const sqHeight = extractNumber(imgContRef.current.style.height);
+
       if (!resizingCorner) {
         let newLeft = Math.min(
-          Math.max(left + parseInt(((e.pageX - originalX)/sqWidth) * 100), 0),
+          Math.max(left + ((e.pageX - originalX) / sqWidth) * 100, 0),
           100 - width
         );
         let newTop = Math.min(
-          Math.max(top + parseInt(((e.pageY - originalY)/sqHeight) * 100), 0),
+          Math.max(top + ((e.pageY - originalY) / sqHeight) * 100, 0),
           100 - height
         );
         let newWidth = width;
         let newHeight = height;
-        if (newLeft + width > 100) {
+        if (newLeft + width >= 100) {
           newWidth -= newLeft + width - 100;
         }
-        if (newTop + height > 100) {
+        if (newTop + height >= 100) {
           newHeight -= newTop + height - 100;
         }
         setLeft(newLeft);
         setTop(newTop);
+        setWidth(newWidth);
+        setHeight(newHeight);
         setOriginalX(e.pageX);
         setOriginalY(e.pageY);
 
         // Update crop dimensions in the store
         const newCropDim = {
           ...cropDim,
-          x1: newLeft,
-          y1: newTop,
-          x2: newLeft + newWidth,
-          y2: newTop + newHeight,
+          x1: ptpi(newLeft, image.width),
+          y1: ptpi(newTop, image.height),
+          x2: ptpi(newLeft + newWidth, image.width),
+          y2: ptpi(newTop + newHeight, image.height),
         };
         setCropDim(newCropDim);
       } else {
-        const deltaX = parseInt(((e.pageX - originalX)/sqWidth) * 100)
-        const deltaY = parseInt(((e.pageY - originalY)/sqHeight) * 100)
+        const deltaX = ((e.pageX - originalX) / sqWidth) * 100;
+        const deltaY = ((e.pageY - originalY) / sqHeight) * 100;
 
         let newWidth = width;
         let newHeight = height;
@@ -138,12 +141,12 @@ const Box = () => {
 
         newLeft = Math.max(newLeft, 0);
         newTop = Math.max(newTop, 0);
-        newWidth = Math.max(newWidth, 1);
-        if (newWidth + newLeft > 100) {
+        newWidth = Math.max(newWidth, 5);
+        if (newWidth + newLeft >= 100) {
           newWidth -= newWidth + newLeft - 100;
         }
-        newHeight = Math.max(newHeight, 1);
-        if (newHeight + newTop > 100) {
+        newHeight = Math.max(newHeight, 5);
+        if (newHeight + newTop >= 100) {
           newHeight -= newHeight + newTop - 100;
         }
 
@@ -157,10 +160,10 @@ const Box = () => {
         // Update crop dimensions in the store
         const newCropDim = {
           ...cropDim,
-          x1: newLeft,
-          y1: newTop,
-          x2: newLeft + newWidth,
-          y2: newTop + newHeight,
+          x1: ptpi(newLeft, image.width),
+          y1: ptpi(newTop, image.height),
+          x2: ptpi(newLeft + newWidth, image.width),
+          y2: ptpi(newTop + newHeight, image.height),
         };
         setCropDim(newCropDim);
       }
@@ -199,11 +202,18 @@ const Box = () => {
           image.height,
           squareSize
         );
-        
+
         setSqWidth(width);
         setSqHeight(height);
       };
+      setCropDim({
+        x1: parseInt(image.width / 3),
+        x2: parseInt((2 * image.width) / 3),
+        y1: parseInt(image.height / 3),
+        y2: parseInt((2 * image.height) / 3),
+      });
       handleResize(); // Initial resizing
+
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }
