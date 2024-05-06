@@ -6,8 +6,21 @@
   justify-content: center;
   align-items: center;
   flex:4;
+  
 }
 
+.box::after {
+  position: absolute;
+  content: "";
+  width: 97%;
+  height: 97%;
+  border-radius: 13px;
+box-shadow: inset 12px 12px 24px #7425c0,
+            inset -5px -5px 5px #9e31ff,   -3px -3px 3px #7425c0, 3px 3px 3px #9e31ff;
+
+
+            z-index: -1;
+}
 .resizable {
   background: #8b8181aa;
   position: absolute;

@@ -9,6 +9,7 @@ const extractNumber = (str) => {
 
 function fitImageInsideSquare(imageWidth, imageHeight, squareSize) {
   // Calculate aspect ratio of the image
+  squareSize = squareSize - squareSize*0.03
   const imageAspectRatio = imageWidth / imageHeight;
 
   // Check if the image is landscape or portrait
@@ -228,9 +229,8 @@ const Box = () => {
       {imageSrc && (
         <div
           ref={imgContRef}
+          className="square"
           style={{
-            // width: `${fitImageInsideSquare(image.width, image.height, Math.min(boxRef.current.clientWidth, boxRef.current.clientHeight)).width}px`,
-            // height: `${fitImageInsideSquare(image.width, image.height, Math.min(boxRef.current.clientWidth, boxRef.current.clientHeight)).height}px`,
             width: `${sqWidth}px`,
             height: `${sqHeight}px`,
             background: `url(${imageSrc})`,
