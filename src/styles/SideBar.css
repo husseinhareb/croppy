@@ -96,6 +96,21 @@
   transform: scale(1.05);
 }
 
+.message {
+  padding: 5px;
+  font-size: small;
+  width: 89%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(137, 43, 226, 0.748);
+  color: #e9e9e9;
+  border-radius: 13px;
+  margin: 5px;
+  z-index: 1000;
+}
+
 @keyframes side-anim {
   0% {
     filter: blur(3px) brightness(1);

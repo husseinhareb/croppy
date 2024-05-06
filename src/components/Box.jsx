@@ -9,7 +9,7 @@ const extractNumber = (str) => {
 
 function fitImageInsideSquare(imageWidth, imageHeight, squareSize) {
   // Calculate aspect ratio of the image
-  squareSize = squareSize - squareSize*0.03
+  squareSize = squareSize - squareSize * 0.03;
   const imageAspectRatio = imageWidth / imageHeight;
 
   // Check if the image is landscape or portrait
@@ -141,7 +141,7 @@ const Box = () => {
         // Ensure dimensions are not negative
 
         newLeft = Math.min(Math.max(newLeft, 0), left + width - 5);
-        newTop = Math.min(Math.max(newTop, 0), top + height - 5)
+        newTop = Math.min(Math.max(newTop, 0), top + height - 5);
         newWidth = Math.max(newWidth, 5);
         if (newWidth + newLeft >= 100) {
           newWidth -= newWidth + newLeft - 100;
