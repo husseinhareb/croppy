@@ -139,8 +139,8 @@ const Box = () => {
 
         // Ensure dimensions are not negative
 
-        newLeft = Math.max(newLeft, 0);
-        newTop = Math.max(newTop, 0);
+        newLeft = Math.min(Math.max(newLeft, 0), left + width - 5);
+        newTop = Math.min(Math.max(newTop, 0), top + height - 5)
         newWidth = Math.max(newWidth, 5);
         if (newWidth + newLeft >= 100) {
           newWidth -= newWidth + newLeft - 100;

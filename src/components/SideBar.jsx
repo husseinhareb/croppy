@@ -41,7 +41,7 @@ const SideBar = () => {
 
   return (
     <div className="side-bar">
-      <div className="crop-dim-container">
+<div className="crop-dim-container">
         {["x1", "x2", "y1", "y2"].map((key) => (
           <input
             key={key}

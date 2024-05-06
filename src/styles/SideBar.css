@@ -1,7 +1,7 @@
 .side-bar {
   position: relative;
   width: 25vw;
-  padding: 13px;
+  padding: 5% 13px 3% 13px;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -67,12 +67,15 @@
 }
 
 .save-btn-container {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .save-btn {
+  width: 70%;
+  min-width: 100px;
   letter-spacing: 1px;
   font-weight: 700;
   color: blueviolet;
