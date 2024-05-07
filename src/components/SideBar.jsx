@@ -82,6 +82,7 @@ const SideBar = () => {
   };
   return (
     <div className="side-bar">
+      <div className="side-bar-cont">
       <div className="crop-dim-container">
         {["x1", "x2", "y1", "y2"].map((key) => (
           <input
@@ -115,6 +116,7 @@ const SideBar = () => {
         }}>
         <FaExchangeAlt color="#e9e9e9" id="change-icon"/>
       </button>
+      </div>
     </div>
   );
 };

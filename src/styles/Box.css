@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: center;
   flex:4;
-  
+  padding: 1%;
 }
 
 .box::after {
@@ -82,4 +82,11 @@ box-shadow: inset 12px 12px 24px #7425c0,
   animation-name: fadeIn; /* Use the defined keyframes */
   animation-duration: 2.5s; /* Duration of the animation */
   animation-fill-mode: forwards; /* Maintain the final state after animation */
+}
+
+.square {
+  filter: brightness(1.2);
+  margin: 1%;
+  box-shadow:  10px 10px 37px #a434ff,
+             -10px -10px 37px #a434ff;
 }

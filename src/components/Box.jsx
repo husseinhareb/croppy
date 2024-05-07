@@ -2,11 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import "../styles/Box.css";
 import { useCropDim, useImage, useSetCropDim, useSetImage } from "../store";
 
-const extractNumber = (str) => {
-  const matches = str.match(/\d+/); // Match one or more digits
-  return matches ? parseInt(matches[0]) : 0; // Convert matched digits to integer
-};
-
 function fitImageInsideSquare(imageWidth, imageHeight, squareSize) {
   // Calculate aspect ratio of the image
   squareSize = squareSize - squareSize * 0.03;
