@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex:4;
+  flex: 4;
   padding: 1%;
 }
 
@@ -17,24 +17,53 @@
   border-radius: 13px;
   border-top-right-radius: 8%;
   border-bottom-left-radius: 8%;
-box-shadow: inset 12px 12px 24px #7425c0,
-            inset -5px -5px 5px #9e31ff,   -3px -3px 3px #7425c0, 3px 3px 3px #9e31ff;
-
-
-            z-index: -1;
+  box-shadow: inset 12px 12px 24px #7425c0,
+              inset -5px -5px 5px #9e31ff,
+              -3px -3px 3px #7425c0, 
+              3px 3px 3px #9e31ff;
+  z-index: -1;
 }
+
+.square {
+  filter: brightness(1.2);
+  margin: 1%;
+  box-shadow: 10px 10px 37px #a434ff, -10px -10px 37px #a434ff;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 2.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .resizable {
   position: absolute;
-}
-
-.resizable .resizers {
-  width: 100%;
-  height: 100%;
-  border: 3px solid #4286f4;
+  border: 2px solid #4286f4;
   box-sizing: border-box;
 }
 
-.resizable .resizers .resizer {
+.resizers {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.resizer {
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -43,50 +72,26 @@ box-shadow: inset 12px 12px 24px #7425c0,
   position: absolute;
 }
 
-.resizable .resizers .resizer.top-left {
+.resizer.top-left {
   left: -5px;
   top: -5px;
   cursor: nwse-resize;
 }
 
-.resizable .resizers .resizer.top-right {
+.resizer.top-right {
   right: -5px;
   top: -5px;
   cursor: nesw-resize;
 }
 
-.resizable .resizers .resizer.bottom-left {
+.resizer.bottom-left {
   left: -5px;
   bottom: -5px;
   cursor: nesw-resize;
 }
 
-.resizable .resizers .resizer.bottom-right {
+.resizer.bottom-right {
   right: -5px;
   bottom: -5px;
   cursor: nwse-resize;
-}
-
-/* Define the fade-in animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0; /* Start with opacity 0 */
-  }
-  to {
-    opacity: 1; /* End with opacity 1 */
-  }
-}
-
-/* Create a class to apply the fade-in animation */
-.fadeIn {
-  animation-name: fadeIn; /* Use the defined keyframes */
-  animation-duration: 2.5s; /* Duration of the animation */
-  animation-fill-mode: forwards; /* Maintain the final state after animation */
-}
-
-.square {
-  filter: brightness(1.2);
-  margin: 1%;
-  box-shadow:  10px 10px 37px #a434ff,
-             -10px -10px 37px #a434ff;
 }
